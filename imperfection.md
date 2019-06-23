@@ -18,7 +18,6 @@ References
 
 #### 概述
 
-
 A geometric imperfection pattern:
 
 几何缺陷：
@@ -33,12 +32,7 @@ A geometric imperfection pattern:
 
 •can be specified directly.
 
-
-
-
-
-
-General postbuckling analysis
+#### General postbuckling analysis
 
 
 In Abaqus/Standard the Riks method (“Unstable collapse and postbuckling analysis,”  Section 6.2.4) can be used to solve postbuckling problems, both with stable and unstable postbuckling behavior. However, the exact postbuckling problem often cannot be analyzed directly due to the discontinuous response (bifurcation) at the point of buckling. To analyze a postbuckling problem, you must turn it into a problem with continuous response instead of bifurcation, which can be accomplished by introducing a geometric imperfection pattern in the “perfect” geometry so that there is some response in the buckling mode before the critical load is reached.
@@ -46,7 +40,7 @@ In Abaqus/Standard the Riks method (“Unstable collapse and postbuckling analys
 
 
 
-Introducing geometric imperfections
+#### Introducing geometric imperfections
 
 
 Imperfections are usually introduced by perturbations in the geometry. Abaqus offers three ways to define an imperfection: as a linear superposition of buckling eigenmodes, from the displacements of a static analysis, or by specifying the node number and imperfection values directly. Only the translational degrees of freedom are modified. Abaqus will then calculate the normals using the usual algorithm based on the perturbed coordinates. Unless the precise shape of an imperfection is known, an imperfection consisting of multiple superimposed buckling modes can be introduced (“Eigenvalue buckling prediction,”  Section 6.2.3).
@@ -60,9 +54,9 @@ The usual approach involves two analysis runs with the same model definition, us
 
 2.In the second analysis run use Abaqus/Standard or Abaqus/Explicit to introduce an imperfection in the geometry by adding these buckling modes to the “perfect” geometry. The lowest buckling modes are frequently assumed to provide the most critical imperfections, so usually these are scaled and added to the perfect geometry to create the perturbed mesh. The imperfection thus has the form 
 
+$\Delta x_{i}=\sum_{i=1}^{M} w_{i} \phi_{i}$
 
-
-where  is the  mode shape and  is the associated scale factor.
+where $\phi_{i}$ is the $i^{t h}$ mode shape and $w_i$ is the associated scale factor.
 
 You must choose the scale factors of the various modes; usually (if the structure is not imperfection sensitive) the lowest buckling mode should have the largest factor. The magnitudes of the perturbations used are typically a few percent of a relative structural dimension such as a beam cross-section or shell thickness.
 
@@ -85,7 +79,7 @@ If the model is defined in terms of an assembly of part instances, the part (.pr
 
 
 
-Defining an imperfection based on eigenmode data
+##### Defining an imperfection based on eigenmode data
 
 To define an imperfection based on the superposition of weighted mode shapes, specify the results file and step from a previous eigenfrequency extraction or eigenvalue buckling prediction analysis. Optionally, you can import eigenmode data for a specified node set.
 
@@ -97,7 +91,7 @@ Input File Usage:           *IMPERFECTION, FILE=results_file, STEP=step, NSET=na
 
 
 
-Defining an imperfection based on static analysis data
+##### Defining an imperfection based on static analysis data
 
 To define an imperfection based on the deformed geometry of a previous static analysis (“Unstable collapse and postbuckling analysis,”  Section 6.2.4), specify the results file and step (and, optionally, the increment number) from a previous static analysis. (If the increment number is not specified, Abaqus will read data from the last increment available for the specified step in the results file.) Optionally, you can import modal data for a specified node set.
 
@@ -109,7 +103,7 @@ Input File Usage:           *IMPERFECTION, FILE=results_file, STEP=step, INC=inc
 
 
 
-Defining an imperfection directly
+##### Defining an imperfection directly
 
 You can specify the imperfection directly as a table of node numbers and coordinate perturbations in the global coordinate system or, optionally, in a cylindrical or spherical coordinate system. Alternatively, you can read the imperfection data from a separate input file.
 
@@ -124,7 +118,7 @@ If no input file is specified, Abaqus assumes that the data follow the option.
 
 
 
-Imperfection sensitivity
+#### Imperfection sensitivity
 
 
 The response of some structures depends strongly on the imperfections in the original geometry, particularly if the buckling modes interact after buckling occurs. Hence, imperfections based on a single buckling mode tend to yield nonconservative results. By adjusting the magnitude of the scaling factors of the various buckling modes, the imperfection sensitivity of the structure can be assessed. Normally, a number of analyses should be conducted to investigate the sensitivity of a structure to imperfections. Structures with many closely spaced eigenmodes tend to be imperfection sensitive, and imperfections with shapes corresponding to the eigenmode for the lowest eigenvalue may not give the worst case.
@@ -135,7 +129,7 @@ On the other hand, if the imperfection is large, the postbuckling response will 
 
 
 
-Input file template
+#### Input file template
 
 
 The following example illustrates a postbuckling analysis of a structure with an imperfection defined by a linear superposition of the buckling eigenmodes and involves two analysis runs with the same model definition.
